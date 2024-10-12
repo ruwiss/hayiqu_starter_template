@@ -117,9 +117,9 @@ final _httpService = getIt<HttpService>();
 _httpService.enableLogger(true);
 _httpService.setBaseUrl(baseUrl);
 _httpService.setHeaders(headers);
-_httpService.dio.options.connectTimeout = Duration(seconds: 5);
 
-_httpService.interceptors.add(...dummyInterceptor);
+_httpService.dio.options.connectTimeout = Duration(seconds: 5);
+_httpService.dio.interceptors.add(...dummyInterceptor);
 
 // GET isteği (Önbellek ile birlikte)
 await _httpService.get(endpoint, useCache: true);
