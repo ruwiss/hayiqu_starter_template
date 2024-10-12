@@ -230,7 +230,7 @@ Kullanışlı Eklentiler
 "ornek@gmail.com".isMail; // true
 "örNek".toLowerCaseTurkish; // 'örnek'
 "örNek".toUpperCaseTurkish; // 'ÖRNEK'
-"örNek".onlyLatin; // 'rnek'
+"örNek".onlyLatin; // 'rNek'
 "<h1>Örnek</h1>".removeHtmlTags; // 'Örnek'
 "Örnek metin".countWords; // 2
 "örnek124d3".removeNumbers; // 'örnekd'
