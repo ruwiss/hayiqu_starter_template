@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get_it/get_it.dart';
-import 'package:hayiqu/services/http.dart';
+import 'package:hayiqu/src/services/http.dart';
 
 final GetIt getIt = GetIt.instance;
 

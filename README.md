@@ -143,6 +143,26 @@ await _httpService.download(
 );
 ```
 ___
+Hata / Sonuç Yönetimi için [Result]
+```dart
+Future<Result<int, FirebaseException>> getUserId() async {
+    try {
+      final userId = await _authService.getUserId();
+      return Result.value(input: userId);
+    } on FirebaseException catch (e) {
+      return Result.error(input: e);
+    }
+}
+
+final result = await getUserId();
+
+if (result.hasError) {
+  result.requireError.log();
+} else {
+  result.requireValue.log();
+}
+```
+___
 Uygulama teması için;
 ```dart
 // app/theme.dart
@@ -223,7 +243,41 @@ TextButton(
 ),
 ```
 ___
-Kullanışlı Eklentiler
+
+Figma stili text with stroke efekti
+```dart
+TextWithStroke(
+    text: 'Flutter with Stroke',
+    style: TextStyle(
+    fontSize: 120,
+    color: Color(0xFF7DCFFF),
+    ),
+),
+```
+___
+RichTextWidget
+```dart
+body: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: RichTextWidget(
+        styleForAll: Theme.of(context).textTheme.displayMedium,
+        texts: [
+        BaseText.plain(
+            text: 'Welcome to my blog at ',
+        ),
+        BaseText.link(
+            text: 'https://example.com/',
+            onTap: () {
+            'Tapped'.log();
+            },
+        ),
+        ],
+    ),
+);
+),
+```
+___
+## Kullanışlı Eklentiler
 ```dart
 <!-- String Extensions -->
 "örNek".capitalize; // 'Örnek'
@@ -242,22 +296,31 @@ Kullanışlı Eklentiler
 "Find max of array".toCamelCase; // 'findMaxOfArray'
 "Merhaba sevgili kardeşim".toTitleCase; // 'Merhaba Sevgili Kardeşim'
 
-
+// Assets üzerinde bulunan dosyayı okur
+// Uint8List verisi döndürür
+await 'images/template.png'.localFileData())
+```
+```dart
 <!-- DateTime Extensions -->
+
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 gün önce'
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 gün önce'
 
 DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 1))); // '1g'
 DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 30))); // '30g'
-
-
+```
+```dart
 <!-- Number Extensions -->
+
 12.sbh(); // SizedBox(height: 12)
 12.sbw(); // SizedBox(width: 12)
 0.2.vw; // Screen Width * 0.2
 0.2.vh; // Screen Height * 0.2
 
+```
+```dart
 <!-- Context Extensions -->
+
 context.colors; // Theme.of(context).colorScheme
 context.textTheme; // Theme.of(context).textTheme
 context.mediaQuery; // MediaQuery.of(context)
@@ -287,19 +350,122 @@ context.paddingVerticalLow; // EdgeInsets.symmetric(vertical: context.lowValue)
 context.paddingVerticalDefault; // EdgeInsets.symmetric(vertical: context.defaultValue)
 context.paddingVerticalHigh; // EdgeInsets.symmetric(vertical: context.highValue)
 
-context.paddingRightLow; // EdgeInsets.only(right: context.lowValue)
-context.paddingRightDefault; // EdgeInsets.only(right: context.defaultValue)
-context.paddingRightHigh; // EdgeInsets.only(right: context.highValue)
+... ve daha fazlası
+```
+```dart
+<!-- Function Extensions -->
 
-context.paddingLeftLow; // EdgeInsets.only(left: context.lowValue)
-context.paddingLeftDefault; // EdgeInsets.only(left: context.defaultValue)
-context.paddingLeftHigh; // EdgeInsets.only(left: context.highValue)
+// VoidCallback fonksiyonlarda bekleme işlemi
+_counterClockwiseRotationController.forward.delayedCall(
+    const Duration(
+    seconds: 1,
+    ),
+);
 
-context.paddingTopLow; // EdgeInsets.only(top: context.lowValue)
-context.paddingTopDefault; // EdgeInsets.only(top: context.defaultValue)
-context.paddingTopHigh; // EdgeInsets.only(top: context.highValue)
+// Future Unwrap fonksiyonu (Null Safety)
+static Future<File> pickImageFromGallery() => _imagePicker
+    .pickImage(source: ImageSource.gallery)
+    .unwrap() // null check
+    .then((xFile) => xFile.path)
+    .then((filePath) => File(filePath))
 
-context.paddingBottomLow; // EdgeInsets.only(bottom: context.lowValue)
-context.paddingBottomDefault; // EdgeInsets.only(bottom: context.defaultValue)
-context.paddingBottomHigh; // EdgeInsets.only(bottom: context.highValue)
+
+// Future.futureBuilder() fonksiyonu
+// Bu fonksiyon, FutureBuilder ile aynı işlevi yapar
+
+Future<String> getName() => Future.delayed(
+    const Duration(seconds: 2),
+    () => 'John Smith',
+);
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: getName().present(
+          onData: (_, name) => Text(name),
+          onNone: onNone,
+          // onError: ..,
+          // onDoneWithoutDataOrError: ..,
+          // onWaiting: ..,
+        ),
+      ),
+    );
+  }
+}
+
+```
+```dart
+<!-- Stream Extensions -->
+
+// Eventler arasında bekleme işlemi
+await for (final name in getNames().withTimeoutBetweenEvents(
+    const Duration(
+      seconds: 3,
+    ),
+  )) {
+    // object.log extension
+    name.log();
+  }
+
+
+// Stream Hata Kurtarma işlemi
+Stream<String> getNames() async* {
+  yield 'Foo';
+  yield 'Bar';
+  throw Exception('Something went wrong');
+}
+
+final names = getNames().onErrorRecoverWith(
+    (error) {
+      error.log();
+      return 'Baz';
+    },
+  );
+
+await for (final name in names) {
+    name.log(); // Foo, Bar, Baz
+}
+
+// Stream üzerinde eğer hata olursa, kendisini durdurma işlemi
+Stream<String> getNames() async* {
+  yield 'Vandad';
+  await Future.delayed(const Duration(seconds: 1));
+  yield 'John';
+  await Future.delayed(const Duration(seconds: 1));
+  throw 'Enough names for you';
+}
+
+Future<void> testIt() async {
+  await for (final name in getNames().absorbErrors()) {
+    name.log(); // Vandad, John, then stream closes
+  }
+}
+```
+___
+```dart
+<!-- Object Extensions -->
+// Listeyi düzleştirme işlemi
+void testIt() {
+  final flat = [
+    [[1, 2, 3], 4, 5],
+    [6, [7, [8, 9]], 10],
+    11,12
+  ].flatten().log();
+  // (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+}
+
+// Map objesinde detaylı Where filtreleme işlemi
+
+people.where((key, value) => key.length > 4 && value > 20).log();
+// {Peter: 22}
+
+people.whereKey((key) => key.length < 5).log();
+// {John: 20, Mary: 21}
+
+people.whereValue((value) => value.isEven).log();
+// {John: 20, Peter: 22}
 ```

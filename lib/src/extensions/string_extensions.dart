@@ -358,4 +358,12 @@ extension StringExtension on String {
 
     return words.join(' ');
   }
+
+  /// Assets üzerinde bulunan dosyayı okur.
+  /// ```dart
+  ///  await 'images/template.png'.localFileData())
+  /// ```
+  Future<Uint8List> localFileData() => rootBundle.load(this).then(
+        (byteData) => byteData.buffer.asUint8List(),
+      );
 }

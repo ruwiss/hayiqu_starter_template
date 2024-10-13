@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:hayiqu/base/viewmodel.dart';
+import 'package:hayiqu/src/base/viewmodel.dart';
 
 abstract class BaseTheme extends BaseViewModel {
   static Brightness get brightness =>
