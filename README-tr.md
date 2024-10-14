@@ -2,6 +2,10 @@
 
 # Hayiqu Starter Template
 
+```bash
+flutter pub add hayiqu
+```
+
 Hayiqu, çoğu projenizde kullanacağınız yapıları içerir. Aynı kodları tekrar tekrar yazmak yerine Hayiqu'u kullanmanızı öneririz.
 
 ## Hayiqu Neleri İçerir?
