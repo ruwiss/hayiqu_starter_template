@@ -31,11 +31,6 @@ Hayiqu includes structures that you will use in most of your projects. We recomm
 
 * `crypto` package for encryption,
 
-## Usage Examples
-
-To add facilitating features to the ViewModel structure created with Provider, you can extend the `BaseViewModel` structure.
-
-
 
 ## Usage Examples
 
