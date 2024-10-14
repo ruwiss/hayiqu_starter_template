@@ -1,4 +1,5 @@
 [![Language - English](https://img.shields.io/badge/Language-English-9FE2BF)](./README.md)
+[![Language - Türkçe](https://img.shields.io/badge/(Mevcut)-Türkçe-2ea44f)](./README-tr.md)
 
 # Hayiqu Starter Template
 
