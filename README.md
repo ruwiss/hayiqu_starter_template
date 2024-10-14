@@ -121,7 +121,9 @@ _httpService.dio.options.connectTimeout = Duration(seconds: 5);
 _httpService.dio.interceptors.add(...dummyInterceptor);
 
 // GET request (with cache)
-await _httpService.get(endpoint, useCache: true);
+final result = await _httpService.get(endpoint, useCache: true);
+if (result.hasValue) {...}
+if (result.hasError) { result.requireError.message.log(); // type: DioException }
 
 // POST request
 await _httpService.post(endpoint);
