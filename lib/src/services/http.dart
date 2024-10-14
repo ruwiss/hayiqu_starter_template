@@ -1,7 +1,6 @@
-import 'package:dio/dio.dart';
-import 'dart:async';
-
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:hayiqu/hayiqu.dart';
+import 'dart:async';
 
 class HttpService {
   late Dio dio;
@@ -18,32 +17,28 @@ class HttpService {
     enableLogger(true);
   }
 
-  void setBaseUrl(String baseUrl) {
-    dio.options.baseUrl = baseUrl;
-  }
-
-  void setHeaders(Map<String, dynamic> headers) {
-    dio.options.headers = headers;
-  }
-
   final PrettyDioLogger _logger = PrettyDioLogger();
+  BaseOptions get options => dio.options;
 
-  void enableLogger(bool value) {
-    value ? dio.interceptors.add(_logger) : dio.interceptors.remove(_logger);
-  }
+  void setBaseUrl(String baseUrl) => options.baseUrl = baseUrl;
 
-  // GET isteği (Önbellek ile birlikte)
-  Future<Response> get(
+  void setHeaders(Map<String, dynamic> headers) => options.headers = headers;
+
+  void enableLogger(bool value) =>
+      value ? dio.interceptors.add(_logger) : dio.interceptors.remove(_logger);
+
+  // GET request (with caching)
+  Future<Result<Response, DioException>> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     bool useCache = true,
-    int retryCount = 3, // Maksimum yeniden deneme sayısı
-    int retryDelay = 1000, // Yeniden deneme gecikmesi (ms)
+    int retryCount = 3, // Maximum number of retries
+    int retryDelay = 1000, // Retry delay (ms)
   }) async {
     try {
       if (useCache && _cache.containsKey(endpoint)) {
-        return _cache[endpoint]!;
+        return Result.value(input: _cache[endpoint]!);
       }
 
       Response response = await _makeRequest(
@@ -60,14 +55,14 @@ class HttpService {
         _cache[endpoint] = response;
       }
 
-      return response;
+      return Result.value(input: response);
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      return Result.error(input: e);
     }
   }
 
-  // POST isteği
-  Future<Response> post(
+  // POST request
+  Future<Result<Response, DioException>> post(
     String endpoint, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
@@ -86,14 +81,14 @@ class HttpService {
         retryCount,
         retryDelay,
       );
-      return response;
+      return Result.value(input: response);
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      return Result.error(input: e);
     }
   }
 
-  // PUT isteği
-  Future<Response> put(
+  // PUT request
+  Future<Result<Response, DioException>> put(
     String endpoint, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
@@ -112,14 +107,40 @@ class HttpService {
         retryCount,
         retryDelay,
       );
-      return response;
+      return Result.value(input: response);
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      return Result.error(input: e);
     }
   }
 
-  // DELETE isteği
-  Future<Response> delete(
+  // PATCH request
+  Future<Result<Response, DioException>> patch(
+    String endpoint, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    int retryCount = 3,
+    int retryDelay = 1000,
+  }) async {
+    try {
+      Response response = await _makeRequest(
+        () => dio.patch(
+          endpoint,
+          data: data,
+          queryParameters: queryParameters,
+          options: options,
+        ),
+        retryCount,
+        retryDelay,
+      );
+      return Result.value(input: response);
+    } on DioException catch (e) {
+      return Result.error(input: e);
+    }
+  }
+
+  // DELETE request
+  Future<Result<Response, DioException>> delete(
     String endpoint, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
@@ -138,14 +159,14 @@ class HttpService {
         retryCount,
         retryDelay,
       );
-      return response;
+      return Result.value(input: response);
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      return Result.error(input: e);
     }
   }
 
-  // Dosya indirme fonksiyonu
-  Future<void> download({
+  // File download function
+  Future<Result<bool, DioException>> download({
     required String url,
     required String savePath,
     required Function(int received, int total) onProgress,
@@ -170,12 +191,13 @@ class HttpService {
         retryCount,
         retryDelay,
       );
+      return const Result.value(input: true);
     } on DioException catch (e) {
-      throw _handleDioError(e);
+      return Result.error(input: e);
     }
   }
 
-  // Tekrar deneme işlemini yöneten yardımcı fonksiyon
+  // Helper function to manage retry attempts
   Future<Response> _makeRequest(
     Future<Response> Function() requestFunction,
     int retryCount,
@@ -196,36 +218,15 @@ class HttpService {
     throw Exception('Max retry attempts exceeded');
   }
 
-  // Retry yapılabilirliği kontrol eden fonksiyon
+  // Function that checks if a retry is possible
   bool shouldRetry(DioException error) {
-    // Bağlantı hatası veya timeout durumunda tekrar deneyebiliriz
+    // We can retry on connection errors or timeout
     return error.type == DioExceptionType.connectionTimeout ||
         error.type == DioExceptionType.receiveTimeout ||
         error.type == DioExceptionType.unknown;
   }
 
-  // Hata yönetimi için yardımcı fonksiyon
-  Exception _handleDioError(DioException error) {
-    switch (error.type) {
-      case DioExceptionType.cancel:
-        return Exception("İstek iptal edildi");
-      case DioExceptionType.connectionTimeout:
-        return Exception("Bağlantı zaman aşımına uğradı");
-      case DioExceptionType.unknown:
-        return Exception("Bir hata oluştu: ${error.message}");
-      case DioExceptionType.receiveTimeout:
-        return Exception("Yanıt zaman aşımına uğradı");
-      case DioExceptionType.badResponse:
-        return Exception(
-            "Kötü Yanıt: ${error.response?.statusCode} ${error.response?.statusMessage}");
-      case DioExceptionType.sendTimeout:
-        return Exception("Gönderme zaman aşımına uğradı");
-      default:
-        return Exception("Bilinmeyen bir hata oluştu");
-    }
-  }
-
-  // Önbellekleme temizleme işlemi
+  // Cache clearing function
   void clearCache() {
     _cache.clear();
   }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class BaseText {
   final String text;
   final TextStyle? style;
+
   const BaseText({
     required this.text,
     this.style,
@@ -12,31 +13,33 @@ class BaseText {
 
   factory BaseText.plain({
     required String text,
-    TextStyle? style = const TextStyle(),
+    TextStyle? style,
   }) =>
       BaseText(
         text: text,
-        style: style,
+        style: style ?? const TextStyle(),
       );
 
   factory BaseText.link({
     required String text,
     required VoidCallback onTap,
-    TextStyle? style = const TextStyle(
-      color: Colors.blue,
-      decoration: TextDecoration.underline,
-    ),
+    TextStyle? style,
   }) =>
       LinkText(
         text: text,
         onTap: onTap,
-        style: style,
+        style: style ??
+            const TextStyle(
+              color: Colors.blue,
+              decoration: TextDecoration.underline,
+            ),
       );
 }
 
 @immutable
 class LinkText extends BaseText {
   final VoidCallback onTap;
+
   const LinkText({
     required super.text,
     required this.onTap,
@@ -44,7 +47,6 @@ class LinkText extends BaseText {
   });
 }
 
-///* RichText'in kolaylaştırılmış versiyonu
 /// ```dart
 /// body: Padding(
 ///     padding: const EdgeInsets.all(8.0),
@@ -57,7 +59,7 @@ class LinkText extends BaseText {
 ///         BaseText.link(
 ///             text: 'https://example.com/',
 ///             onTap: () {
-///             'Tapped'.log();
+///             // Add logging or handling here
 ///             },
 ///         ),
 ///         ],
@@ -67,6 +69,7 @@ class LinkText extends BaseText {
 class RichTextWidget extends StatelessWidget {
   final TextStyle? styleForAll;
   final Iterable<BaseText> texts;
+
   const RichTextWidget({
     super.key,
     required this.texts,
@@ -79,10 +82,11 @@ class RichTextWidget extends StatelessWidget {
       text: TextSpan(
           children: texts.map(
         (baseText) {
+          final textStyle = styleForAll?.merge(baseText.style);
           if (baseText is LinkText) {
             return TextSpan(
               text: baseText.text,
-              style: styleForAll?.merge(baseText.style),
+              style: textStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   baseText.onTap();
@@ -91,7 +95,7 @@ class RichTextWidget extends StatelessWidget {
           } else {
             return TextSpan(
               text: baseText.text,
-              style: styleForAll?.merge(baseText.style),
+              style: textStyle,
             );
           }
         },

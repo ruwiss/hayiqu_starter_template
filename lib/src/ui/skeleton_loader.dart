@@ -5,8 +5,8 @@ const Color _lightGrey = Color(0xFF848B9E);
 
 const int _transitionDuration = 500;
 
-/// Loading değeri true olduğu müddetçe, görünümü shimmer efekti olarak gösterir.
-/// Yükeleme ekranları için kullanışlıdır
+/// Shows a shimmer effect as long as loading is true.
+/// Useful for loading screens.
 class SkeletonLoader extends StatefulWidget {
   final bool loading;
   final Widget child;
@@ -70,23 +70,22 @@ class SkeletonLoaderState extends State<SkeletonLoader>
 
   @override
   Widget build(BuildContext context) {
-    // Güncellendi mi kontrol et
+    // Check if updated
     if (widget.child != _initialWidget && widget.loading) {
-      // Yeni bir widget'a geçiş yap
+      // Transition to a new widget
       _transitionToNewWidget = true;
 
       _initialWidget = widget.child;
 
-      // ShaderMask hala render edilecek AMA boyut
-      // artık gerçek veriye uyacak şekilde güncellendi.
-      // Shader mask'i sadece birkaç milisaniye sonra
-      // solması için gecikmeli bir future kullanacağız.
-      // çok az süre sonra gerçek widget görüntülenecek
+      // ShaderMask will still be rendered BUT its size
+      // has now been updated to match the real data.
+      // We'll use a delayed future to fade out the shader mask
+      // so the real widget will be displayed shortly after.
       Future.delayed(const Duration(milliseconds: _transitionDuration))
           .then((value) {
         if (!_dispose) {
           setState(() {
-            // print('&^&^&^&^&   -     Set widet transition to false!!');
+            // print('&^&^&^&^&   -     Set widget transition to false!!');
             _transitionToNewWidget = false;
           });
         }
@@ -98,7 +97,7 @@ class SkeletonLoaderState extends State<SkeletonLoader>
       child: AnimatedSize(
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeOut,
-          // Bunu sadece widget yükleniyorsa veya geçiş yapılıyorsa gösteriyoruz
+          // Show this only when the widget is loading or transitioning
           child: widget.loading || _transitionToNewWidget
               ? AnimatedSize(
                   duration: const Duration(milliseconds: 450),

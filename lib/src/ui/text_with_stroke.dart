@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-///* Figma Stili Stroke Efekti
 /// ```dart
 /// TextWithStroke(
 ///     text: 'Flutter with Stroke',

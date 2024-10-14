@@ -1,45 +1,37 @@
-[![Language - Türkçe](https://img.shields.io/badge/Language-Türkçe-2ea44f)](./README-tr.md)
+[![Language - English](https://img.shields.io/badge/Language-English-9FE2BF)](./README.md)
 
 # Hayiqu Starter Template
 
-Hayiqu includes structures that you will use in most of your projects. We recommend using Hayiqu instead of writing the same codes over and over again.
+Hayiqu, çoğu projenizde kullanacağınız yapıları içerir. Aynı kodları tekrar tekrar yazmak yerine Hayiqu'u kullanmanızı öneririz.
 
-## What does Hayiqu include?
+## Hayiqu Neleri İçerir?
 
-* Provider for State Management and Dependency Injection with `GetIt` package along with `BaseViewModel` structure,
+* Provider ile State Yönetimi ve Dependency Injection için `GetIt` paketi ile beraber `BaseViewModel` yapısını,
 
-* `GoRouter` package for navigation,
+* Navigasyon içn `GoRouter` paketi,
 
-* `DeviceInfoUtils`, `DeviceOrientationSettings`, and `PackageInfoUtils` packages to control the device,
+* Cihaz kontrolünü sağlayabilmek için `DeviceInfoUtils`, `DeviceOrientationSettings` ve `PackageInfoUtils` paketlerini,
 
-* Different extensions for `Context`, `DateTime`, `Number`, and `String`,
+* Birbirinden farklı `Context, DateTime, Number, String` eklentilerini,
 
-* [SkeletonLoader](cci:2://file:///c:/Users/omer/Documents/Projeler/hayiqu/lib/src/ui/skeleton_loader.dart:9:0-29:1) widget structure for loading screens,
+* Yükleme ekranlarında kullanabilmek için `SkeletonLoader` widget yapısını,
 
-* A customized and easy-to-use `HttpService` structure based on Dio package,
+* Dio paketinin özelleştirilmiş ve kullanımı kolay hale getirilmiş olan `HttpService` yapısını,
 
-* `BaseTheme` structure for application theme,
+* Uygulama teması için `BaseTheme` yapısını,
 
-* `gap`, `flutter_svg`, `cached_network_image`, `toastification`, `modal_bottom_sheet` package, and `fluid dialog` widget structure for UI,
+* UI üzerinde kullanmak üzere `gap`, `flutter_svg`, `cached_network_image`, `toastification`, `modal_bottom_sheet` paketini ve `fluid dialog` widget yapısını,
 
-* `flutter_cache_manager` package for cache management,
+* Cache yönetimi için `flutter_cache_manager` paketini,
 
-* `crypto` package for encryption,
+* Şifreleme için `crypto` paketini içerir.
 
-## Usage Examples
+## Kullanım Örnekleri
 
-To add facilitating features to the ViewModel structure created with Provider, you can extend the `BaseViewModel` structure.
-
-
-
-## Usage Examples
-
-You can extend the BaseViewModel structure to add convenient features to the ViewModel structure created with Provider.
-
+Provider ile oluşturulan ViewModel yapısına kolaylaştırıcı özellikler kazandırmak için BaseViewModel yapısını extend edebilirsiniz.
 
 ```dart
-// Example usage
-class MyViewModel with BaseViewModel {
+class HomeViewmodel extends BaseViewModel {
   final _apiService = getIt<ApiRepository>();
   List<Todo> _todos = [];
 
@@ -56,14 +48,14 @@ class MyViewModel with BaseViewModel {
 ```
 
 ___
-You can use the GetIt package for Dependency Injection.
+Dependency Injection için GetIt paketini kullanabilirsiniz.
 
 ```dart
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // HttpService is registered on GetIt by default.
+  // Varsayılan olarak HttpService, GetIt üzerinde kayıtlıdır.
   await setupLocator(() {
-    // Register your GetIt service here
+    // GetIt servis kayıtlarınızı burada yapınız
     getIt.registerLazySingleton<ApiRepository>(() => ApiService());
   });
   runApp(const MyApp());
@@ -72,13 +64,16 @@ void main() async {
 
 ___
 
-To get detailed information about the current device;
+Mevcut cihaz ile ilgili detaylı bilgi almak için;
 ```dart
+await DeviceInfoUtils().init();
+
 print(await DeviceInfoUtils().getPlatformName());
 print(await DeviceInfoUtils().getDeviceId());
+print(await DeviceInfoUtils().getDeviceInfo());
 ```
 ___
-For device-oriented screens;
+Cihaz yönelimli ekranları için;
 ```dart
 await DeviceOrientationSettings.screenVertical();
 await DeviceOrientationSettings.screenHorizontal();
@@ -86,7 +81,7 @@ await DeviceOrientationSettings.screenRight();
 await DeviceOrientationSettings.screenLeft();
 ```
 ___
-To get information about the application;
+Uygulama hakkında bilgi almak için;
 ```dart
 await PackageInfoUtils().init();
 
@@ -95,7 +90,7 @@ print(await PackageInfoUtils().getAppName());
 ```
 ___
 
-For loading (waiting) screens with content;
+İçerikleri yükleme (bekleme) ekranları için;
 ```dart
 SkeletonLoader(
   loading: true,
@@ -104,7 +99,7 @@ SkeletonLoader(
 );
 ```
 ___
-To customize or use HttpService;
+HttpService'i özelleştirmek veya kullanmak için;
 ```dart
 final _httpService = getIt<HttpService>();
 
@@ -115,29 +110,29 @@ _httpService.setHeaders(headers);
 _httpService.dio.options.connectTimeout = Duration(seconds: 5);
 _httpService.dio.interceptors.add(...dummyInterceptor);
 
-// GET request (with cache)
+// GET isteği (Önbellek ile birlikte)
 await _httpService.get(endpoint, useCache: true);
 
-// POST request
+// POST isteği
 await _httpService.post(endpoint);
 
-// PUT request
+// PUT isteği
 await _httpService.put(endpoint);
 
-// DELETE request
+// DELETE isteği
 await _httpService.delete(endpoint);
 
-// Single file download
+// Tek dosya indirme
 await _httpService.download(
   url: url,
   savePath: savePath,
   onProgress: (received, total) {
-    // Progress handling
+    // İlerleme işlemi
   },
 );
 ```
 ___
-Error / Result Management for [Result]
+Hata / Sonuç Yönetimi için [Result]
 ```dart
 Future<Result<int, FirebaseException>> getUserId() async {
     try {
@@ -157,7 +152,7 @@ if (result.hasError) {
 }
 ```
 ___
-For application theme;
+Uygulama teması için;
 ```dart
 // app/theme.dart
 class ThemeProvider extends BaseTheme {}
@@ -176,7 +171,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         final themeProvider = context.watch<ThemeProvider>();
         return MaterialApp.router(
-          title: 'Example',
+          title: 'Örnek',
           theme: themeProvider.themeData,
           themeMode: themeProvider.themeMode,
           routerConfig: AppRouter.router,
@@ -188,7 +183,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 ___
-Gap usage
+Gap kullanımı
 ```dart
 Row(
     children: [
@@ -207,7 +202,7 @@ Column(
 )
 ```
 ___
-Fluid Dialog usage
+Fluid Dialog kullanımı
 ```dart
 OutlinedButton(
     onPressed: () {
@@ -229,7 +224,7 @@ OutlinedButton(
 TextButton(
   onPressed: () => DialogNavigator.of(context).push(
     FluidDialogPage(
-      // New dialog page to be displayed
+        // Görüntülenecek yeni diyalog sayfası
       builder: (context) => const SecondDialogPage(),
     ),
   ),
@@ -238,7 +233,7 @@ TextButton(
 ```
 ___
 
-Figma-style text with stroke effect
+Figma stili text with stroke efekti
 ```dart
 TextWithStroke(
     text: 'Flutter with Stroke',
@@ -271,50 +266,50 @@ body: Padding(
 ),
 ```
 ___
-## Useful Extensions
-### String Extensions
+## Kullanışlı Eklentiler
 ```dart
-"exAmpLE".capitalize; // 'Example'
-"example@gmail.com".isMail; // true
+<!-- String Extensions -->
+"örNek".capitalize; // 'Örnek'
+"ornek@gmail.com".isMail; // true
 "örNek".toLowerCaseTurkish; // 'örnek'
 "örNek".toUpperCaseTurkish; // 'ÖRNEK'
 "örNek".onlyLatin; // 'rNek'
-"<h1>Example</h1>".removeHtmlTags; // 'Example'
-"Example text".countWords; // 2
-"exam47p34le".removeNumbers; // 'example'
-"exa1m24pl3e".onlyNumbers; // '1243'
-"(example/!@#\$%^".removeSpecialChars; // 'example'
+"<h1>Örnek</h1>".removeHtmlTags; // 'Örnek'
+"Örnek metin".countWords; // 2
+"örnek124d3".removeNumbers; // 'örnekd'
+"örnek124d3".onlyNumbers; // '1243'
+"(asda/!@#\$%^".removeSpecialChars; // 'asda'
 "es4e5523nt1is".removeLetters; // '455231'
 "sLuG Case".toSlug; // 'sLuG_Case'
 "SNAKE CASE".toSnakeCase; // 'snake_case'
 "Find max of array".toCamelCase; // 'findMaxOfArray'
-"Hello my name is example".toTitleCase; // 'Hello My Name Is Example'
+"Merhaba sevgili kardeşim".toTitleCase; // 'Merhaba Sevgili Kardeşim'
 
-// Reads the file on the Assets
-// Returns Uint8List data
+// Assets üzerinde bulunan dosyayı okur
+// Uint8List verisi döndürür
 await 'images/template.png'.localFileData())
 ```
-___
-### DateTime Extensions
 ```dart
+<!-- DateTime Extensions -->
+
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 gün önce'
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 gün önce'
 
 DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 1))); // '1g'
 DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 30))); // '30g'
 ```
-___
-### Number Extensions
 ```dart
+<!-- Number Extensions -->
+
 12.sbh(); // SizedBox(height: 12)
 12.sbw(); // SizedBox(width: 12)
 0.2.vw; // Screen Width * 0.2
 0.2.vh; // Screen Height * 0.2
 
 ```
-___
-### Context Extensions
 ```dart
+<!-- Context Extensions -->
+
 context.colors; // Theme.of(context).colorScheme
 context.textTheme; // Theme.of(context).textTheme
 context.mediaQuery; // MediaQuery.of(context)
@@ -344,19 +339,19 @@ context.paddingVerticalLow; // EdgeInsets.symmetric(vertical: context.lowValue)
 context.paddingVerticalDefault; // EdgeInsets.symmetric(vertical: context.defaultValue)
 context.paddingVerticalHigh; // EdgeInsets.symmetric(vertical: context.highValue)
 
-... and more
+... ve daha fazlası
 ```
-___
-### Function Extensions
 ```dart
-// Waiting operation in VoidCallback functions
+<!-- Function Extensions -->
+
+// VoidCallback fonksiyonlarda bekleme işlemi
 _counterClockwiseRotationController.forward.delayedCall(
     const Duration(
     seconds: 1,
     ),
 );
 
-// Future Unwrap function (Null Safety)
+// Future Unwrap fonksiyonu (Null Safety)
 static Future<File> pickImageFromGallery() => _imagePicker
     .pickImage(source: ImageSource.gallery)
     .unwrap() // null check
@@ -364,22 +359,22 @@ static Future<File> pickImageFromGallery() => _imagePicker
     .then((filePath) => File(filePath))
 
 
-// Future.futureBuilder() function
-// This function performs the same function as FutureBuilde
+// Future.futureBuilder() fonksiyonu
+// Bu fonksiyon, FutureBuilder ile aynı işlevi yapar
+
+Future<String> getName() => Future.delayed(
+    const Duration(seconds: 2),
+    () => 'John Smith',
+);
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-    Future<String> getName() => Future.delayed(
-        const Duration(seconds: 2),
-        () => 'Example',
-    );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: getName().futureBuilder(
+        child: getName().present(
           onData: (_, name) => Text(name),
           onNone: onNone,
           // onError: ..,
@@ -392,10 +387,10 @@ class HomePage extends StatelessWidget {
 }
 
 ```
-___
-### Stream Extensions
 ```dart
-// Waiting operation between events
+<!-- Stream Extensions -->
+
+// Eventler arasında bekleme işlemi
 await for (final name in getNames().withTimeoutBetweenEvents(
     const Duration(
       seconds: 3,
@@ -406,7 +401,7 @@ await for (final name in getNames().withTimeoutBetweenEvents(
   }
 
 
-// Stream Error Recovery operation
+// Stream Hata Kurtarma işlemi
 Stream<String> getNames() async* {
   yield 'Foo';
   yield 'Bar';
@@ -424,7 +419,7 @@ await for (final name in names) {
     name.log(); // Foo, Bar, Baz
 }
 
-// Stopping the Stream itself if an error occurs
+// Stream üzerinde eğer hata olursa, kendisini durdurma işlemi
 Stream<String> getNames() async* {
   yield 'Vandad';
   await Future.delayed(const Duration(seconds: 1));
@@ -440,9 +435,9 @@ Future<void> testIt() async {
 }
 ```
 ___
-### Object Extensions
 ```dart
-// Flattening the list
+<!-- Object Extensions -->
+// Listeyi düzleştirme işlemi
 void testIt() {
   final flat = [
     [[1, 2, 3], 4, 5],
@@ -452,7 +447,7 @@ void testIt() {
   // (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 }
 
-// Advanced Where filtering operation on Map object
+// Map objesinde detaylı Where filtreleme işlemi
 
 people.where((key, value) => key.length > 4 && value > 20).log();
 // {Peter: 22}

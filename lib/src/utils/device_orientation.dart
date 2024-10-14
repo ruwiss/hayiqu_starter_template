@@ -1,6 +1,5 @@
 part of 'utils.dart';
 
-// Cihazın yatay ya da diket olarak kullanılacağını belirlediğimiz kısım
 final class DeviceOrientationSettings {
   DeviceOrientationSettings._();
 

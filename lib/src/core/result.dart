@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 enum ResultType { value, error }
 
-///* Hata / Sonuç Yönetimi için [Result]
 /// ```dart
 /// Future<Result<int, FirebaseException>> getUserId() async {
 ///     try {

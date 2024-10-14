@@ -1,6 +1,5 @@
 part of 'mixins.dart';
-
-/// Bir verinin durumunu kontrol altına almak için yardımcı sınıf
+/// A helper class to control the state of a data
 mixin DataStateHelper<T> on StateHelper {
   T? _data;
 
@@ -10,6 +9,6 @@ mixin DataStateHelper<T> on StateHelper {
     _data = data;
   }
 
-  /// Veri var ise, meşgul değilse ve hata mevcut değilse true döner
+  /// Returns true if data is available, not busy, and no error exists
   bool get dataReady => _data != null && !hasError && !isBusy;
 }

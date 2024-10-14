@@ -1,26 +1,26 @@
 part of 'extensions.dart';
 
 extension FunctionExtensions on VoidCallback {
-  /// Fonksiyon çağrısını beklemeli olarak çağırma işlemi
+  /// Calls the function after a specified delay.
+  /// Usage:
   /// ```dart
-  ///_counterClockwiseRotationController.forward.delayedCall(
-  ///    const Duration(
-  ///    seconds: 1,
-  ///    ),
-  ///);
-  ///```
+  /// _counterClockwiseRotationController.forward.delayedCall(
+  ///   const Duration(seconds: 1),
+  /// );
+  /// ```
   Future<void> delayedCall(Duration duration) => Future.delayed(duration, this);
 }
 
 extension Unwrap<T> on Future<T?> {
-  /// Future Unwrap fonksiyonu (Null Safety)
-  /// Eğer gelen değer null ise then fonksiyonu çalışmayacaktır.
+  /// Unwraps a Future with null safety.
+  /// If the resulting value is null, the `then` function will not be executed.
+  /// Usage:
   /// ```dart
   /// static Future<File> pickImageFromGallery() => _imagePicker
   ///   .pickImage(source: ImageSource.gallery)
   ///   .unwrap() // null check
   ///   .then((xFile) => xFile.path)
-  ///   .then((filePath) => File(filePath))
+  ///   .then((filePath) => File(filePath));
   /// ```
   Future<T> unwrap() => then(
         (value) => value != null ? Future<T>.value(value) : Future.any([]),
@@ -28,8 +28,8 @@ extension Unwrap<T> on Future<T?> {
 }
 
 extension PresentAsyncSnapshot<E> on AsyncSnapshot<E> {
-  /// Future.futureBuilder() fonksiyonu
-  /// Bu fonksiyon, FutureBuilder ile aynı işlevi yapar
+  /// Mimics the functionality of FutureBuilder.
+  /// Usage:
   /// ```dart
   /// @override
   /// Widget build(BuildContext context) {
@@ -75,6 +75,15 @@ extension PresentAsyncSnapshot<E> on AsyncSnapshot<E> {
 }
 
 extension PresentFuture<E> on Future<E> {
+  /// Builds a widget based on the Future's state.
+  /// Usage:
+  /// ```dart
+  /// return myFuture.present(
+  ///   onData: (context, data) => Text(data.toString()),
+  ///   onWaiting: (context) => CircularProgressIndicator(),
+  ///   onError: (context, error, stackTrace) => Text('Error: $error'),
+  /// );
+  /// ```
   Widget present({
     Widget Function(BuildContext context)? onNone,
     Widget Function(BuildContext context, E data)? onData,

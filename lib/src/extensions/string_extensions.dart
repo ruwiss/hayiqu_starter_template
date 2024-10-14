@@ -1,30 +1,30 @@
 part of 'extensions.dart';
 
 extension StringExtension on String {
-  /// `String` metni normal forma çevirir
-  /// ### Örnek
+  /// Converts the `String` text to normal form
+  /// ### Example
   /// ```dart
   /// String foo = 'öRnEK';
-  /// String cFoo = foo.capitalize; // 'Örnek' dönecektir.
+  /// String cFoo = foo.capitalize; // 'Örnek' will be returned.
   /// ```
-  String? get capitalize {
-    if (isEmpty) return this;
+  String get capitalize {
+    if (isEmpty) return '';
     return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
 
-  /// Verilen `String` ifadenin mail adresi olup olmadıgını kontrol eder
-  /// ### Örnek
+  /// Checks if the given `String` is an email address
+  /// ### Example
   /// ```dart
   /// String foo = 'ornek@mail.com';
-  /// bool isMail = foo.isMail; // true döner
+  /// bool isMail = foo.isMail; // returns true
   /// ```
   bool get isMail {
     if (isEmpty) return false;
-    var regex = RegExp(r"(^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)");
+    final regex = RegExp(r"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$");
     return regex.hasMatch(this);
   }
 
-  /// Verilen `String` Türkçe metni küçük harflerle tekrar yazar
+  /// Rewrites the given `String` Turkish text in lowercase
   String toLowerCaseTurkish() {
     String result = "";
     for (var char in characters) {
@@ -37,14 +37,19 @@ extension StringExtension on String {
           break;
         case 'Ğ':
           result += 'ğ';
+          break;
         case 'Ü':
           result += 'ü';
+          break;
         case 'Ö':
           result += 'ö';
+          break;
         case 'Ş':
           result += 'ş';
+          break;
         case 'Ç':
           result += 'ç';
+          break;
         default:
           result += char.toLowerCase();
       }
@@ -52,7 +57,7 @@ extension StringExtension on String {
     return result;
   }
 
-  /// Verilen `String` Türkçe metni büyük harflerle tekrar yazar
+  /// Rewrites the given `String` Turkish text in uppercase
   String toUpperCaseTurkish() {
     String result = "";
     for (var char in characters) {
@@ -65,14 +70,19 @@ extension StringExtension on String {
           break;
         case 'ğ':
           result += 'Ğ';
+          break;
         case 'ü':
           result += 'Ü';
+          break;
         case 'ö':
           result += 'Ö';
+          break;
         case 'ş':
           result += 'Ş';
+          break;
         case 'ç':
           result += 'Ç';
+          break;
         default:
           result += char.toUpperCase();
       }
@@ -80,107 +90,90 @@ extension StringExtension on String {
     return result;
   }
 
-  /// Yalnızca latin harflere sahip olan `String`i döndürür
-  /// ### Örnek
+  /// Returns only the Latin characters from the `String`
+  /// ### Example
   /// ```dart
   /// String foo = '4*%^55/ru4w5523it1s';
-  /// String onlyLatin = foo.onlyLatin; // 'ruwis' döner
+  /// String onlyLatin = foo.onlyLatin; // 'ruwis' will be returned
   /// ```
-  String? get onlyLatin {
-    if (isEmpty) return this;
-    var regex = RegExp(r'([^a-zA-Z\s]+)');
+  String get onlyLatin {
+    if (isEmpty) return '';
+    final regex = RegExp(r'[^a-zA-Z\s]+');
     return replaceAll(regex, '');
   }
 
-  /// Verilen `String` içindeki HTML etiketlerini kaldırır
+  /// Removes HTML tags from the given `String`
   String removeHtmlTags() => replaceAll(RegExp(r'<[^>]*>'), '');
 
-  /// Verilen `String` metnin kaç kelime olduğunu döndürür
+  /// Returns the number of words in the given `String`
   ///
   /// The pattern is based on spaces.
   /// ### Example
   /// ```dart
   /// String foo = 'Merhaba sevgili kardeşim bugün nasılsın?';
-  /// int count = foo.countWords; // 5 dönecektir.
+  /// int count = foo.countWords; // 5 will be returned.
   /// ```
   int get countWords {
     if (isEmpty) return 0;
-    var words = trim().split(RegExp(r'(\s+)'));
-    // Sembol ve sayıları [onlyLatin] eklentisiyle filtreliyoruz
-    var filteredWords = words.where((e) => e.onlyLatin!.isNotEmpty);
+    final words = trim().split(RegExp(r'\s+'));
+    final filteredWords = words.where((e) => e.onlyLatin.isNotEmpty);
     return filteredWords.length;
   }
 
-  /// Verilen `String` ifadeden sayıları siler
-  /// ### Örnek 1
+  /// Removes numbers from the given `String`
+  /// ### Example 1
   /// ```dart
   /// String foo = 'ru2784w3982is';
-  /// String noNumbers = foo.removeNumbers; // 'ruwis' dönecektir.
+  /// String noNumbers = foo.removeNumbers; // 'ruwis' will be returned.
   /// ```
-  /// ### Örnek 2
-  /// ```dart
-  /// String foo = 'r-uw9043*is24';
-  /// String noNumbers = foo.removeNumbers; // 'r-uw*is' dönecektir.
-  /// ```
-  String? get removeNumbers {
-    if (isEmpty) return this;
-    var regex = RegExp(r'(\d+)');
+  String get removeNumbers {
+    if (isEmpty) return '';
+    final regex = RegExp(r'\d+');
     return replaceAll(regex, '');
   }
 
-  /// Verieln `String` metinden sadece sayıları döndürür
-  /// ### Örnek
+  /// Returns only the numbers from the given `String`
+  /// ### Example
   /// ```dart
   /// String foo = '4*%^55/es4e5523nt1is';
-  /// String onyNumbers = foo.onlyNumbers; // '455455231' dönecektir.
+  /// String onlyNumbers = foo.onlyNumbers; // '455455231' will be returned.
   /// ```
-  String? get onlyNumbers {
-    if (isEmpty) return this;
-    var regex = RegExp(r'([^0-9]+)');
+  String get onlyNumbers {
+    if (isEmpty) return '';
+    final regex = RegExp(r'[^0-9]+');
     return replaceAll(regex, '');
   }
 
-  /// `String` metinden tüm özel karakterleri siler
-  /// ### Örnek
+  /// Removes all special characters from the `String`
+  /// ### Example
   /// ```dart
   /// String foo = '/!@#\$%^\-&*()+",.?":{}|<>~_-`*%^/ese?:"///ntis/!@#\$%^&*(),.?":{}|<>~_-`';
-  /// String removed = foo.removeSpecial; // 'esentis' dönecektir.
+  /// String removed = foo.removeSpecialChars; // 'esentis' will be returned.
   /// ```
-  String? get removeSpecialChars {
-    if (isEmpty) return this;
-    // ignore: unnecessary_raw_strings
-    var regex = RegExp(r'[/!@#$%^\-&*()+",.?":{}|<>~_-`]');
+  String get removeSpecialChars {
+    if (isEmpty) return '';
+    final regex = RegExp(r'[!@#$%^&*(),.?":{}|<>~`]');
     return replaceAll(regex, '');
   }
 
-  /// Verilen `String` metnin bir IPv4 adresi olup olmadığını kontrol eder
-  /// ### Örnek 1
+  /// Checks if the given `String` is a valid IPv4 address
+  /// ### Example 1
   /// ```dart
   /// String foo = '192.168.1.14';
-  /// bool isIpv4 = foo.isIpv4; // true dönecektir.
-  /// ```
-  /// ### Örnek 2
-  /// ```dart
-  /// String foo = '192.168.1.14.150.1225';
-  /// bool isIpv4 = foo.isIpv4; // false dönecektir.
+  /// bool isIpv4 = foo.isIpv4; // returns true
   /// ```
   bool get isIpv4 {
     if (isEmpty) return false;
-    var regex = RegExp(
-        r'((?:^|\s)([a-z]{3,6}(?=://))?(://)?((?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.(?:25[0-5]|2[0-4]\d|[01]?\d\d?))(?::(\d{2,5}))?(?:\s|$))');
+    final regex = RegExp(
+        r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
     return regex.hasMatch(this);
   }
 
-  /// Verilen `String` metnin bir IPv6 adresi olup olmadığını kontrol eder
-  /// ### Örnek 1
+  /// Checks if the given `String` is a valid IPv6 address
+  /// ### Example 1
   /// ```dart
   /// String foo = '2001:0db8:85a3:0000:0000:8a2e:0370:7334';
-  /// bool isIpv6 = foo.isIpv6; // true dönecektir.
-  /// ```
-  /// ### Örnek 2
-  /// ```dart
-  /// String foo = '192.168.1.14.150.1225';
-  /// bool isIpv6 = foo.isIpv6; // false dönecektir.
+  /// bool isIpv6 = foo.isIpv6; // returns true
   /// ```
   bool get isIpv6 {
     if (isEmpty) return false;
@@ -208,12 +201,12 @@ extension StringExtension on String {
     return regex.hasMatch(this);
   }
 
-  /// Verilen `String` metnin bir `DateTime` olup olmadığını kontrol eder
+  /// Checks whether the given `String` is a valid `DateTime`.
   ///
-  /// ### Doğru formatlar
+  /// ### Valid formats
   ///
   /// * dd/mm/yyyy
-  /// * dd-mm-yyyyy
+  /// * dd-mm-yyyy
   /// * dd.mm.yyyy
   /// * yyyy-mm-dd
   /// * yyyy-mm-dd hrs
@@ -240,13 +233,13 @@ extension StringExtension on String {
     }
   }
 
-  /// Verilen `String`'in doğru bir `json` olup olmadığını kontrol eder.
+  /// Checks whether the given `String` is a valid `json`.
   ///
-  /// ### Örnek
+  /// ### Example
   ///
   /// ```dart
   /// String foo = '{"name":"John","age":30,"cars":null}';
-  /// bool isJson = foo.isJson; // true dönecektir.
+  /// bool isJson = foo.isJson; // returns true.
   /// ```
   bool isJson() {
     if (isEmpty) return false;
@@ -258,16 +251,16 @@ extension StringExtension on String {
     }
   }
 
-  /// `String` metinden sadece harfleri siler.
-  /// ### Örnek 1
+  /// Removes all letters from the `String`.
+  /// ### Example 1
   /// ```dart
   /// String foo = 'es4e5523nt1is';
-  /// String noLetters = foo.removeLetters; // '455231' dönecektir.
+  /// String noLetters = foo.removeLetters; // returns '455231'.
   /// ```
-  /// ### Örnek 2
+  /// ### Example 2
   /// ```dart
   /// String foo = '1244e*s*4e*5523n*t*1i*s';
-  /// String noLetters = foo.removeLetters; // '1244**4*5523**1*' dönecektir.
+  /// String noLetters = foo.removeLetters; // returns '1244**4*5523**1*'.
   /// ```
   String? get removeLetters {
     if (isEmpty) return this;
@@ -276,12 +269,12 @@ extension StringExtension on String {
     return replaceAll(regex, '');
   }
 
-  /// Verilen `String` metni slug case biçimine dönüştürür.
+  /// Converts the given `String` to slug case.
   ///
-  /// ### Örnek
+  /// ### Example
   /// ```dart
   /// String foo = 'sLuG Case';
-  /// String fooSlug = foo.toSlug; // 'sLuG_Case' dönecektir.
+  /// String fooSlug = foo.toSlug; // returns 'sLuG_Case'.
   /// ```
   String? get toSlug {
     if (isEmpty) return this;
@@ -300,12 +293,12 @@ extension StringExtension on String {
     return slugWord;
   }
 
-  /// Verilen `String` metni snake case biçimine dönüştürür.
+  /// Converts the given `String` to snake case.
   ///
-  /// ### Örnek
+  /// ### Example
   /// ```dart
   /// String foo = 'SNAKE CASE';
-  /// String fooSNake = foo.toSnakeCase; // 'snake_case' dönecektir.
+  /// String fooSnake = foo.toSnakeCase; // returns 'snake_case'.
   /// ```
   String? get toSnakeCase {
     if (isEmpty) return this;
@@ -324,11 +317,11 @@ extension StringExtension on String {
     return snakeWord;
   }
 
-  /// Verilen `String` metni camel case biçimine dönüştürür.
-  /// ### Örnek
+  /// Converts the given `String` to camel case.
+  /// ### Example
   /// ```dart
   /// String foo = 'Find max of array';
-  /// String camelCase = foo.toCamelCase; // 'findMaxOfArray' dönecektir.
+  /// String camelCase = foo.toCamelCase; // returns 'findMaxOfArray'.
   /// ```
   String? get toCamelCase {
     if (isEmpty) return this;
@@ -342,11 +335,11 @@ extension StringExtension on String {
     return result;
   }
 
-  /// Verilen `String` metni title case biçimine dönüştürür.
-  /// ### Örnek
+  /// Converts the given `String` to title case.
+  /// ### Example
   /// ```dart
-  /// String foo = 'Merhaba sevgili kardeşim nasılsın?';
-  /// Sting titleCased = foo.toTitleCase; // 'Merhaba Sevgili Kardeşim Nasılsın' dönecektir.
+  /// String foo = 'Hello dear sibling, how are you?';
+  /// String titleCased = foo.toTitleCase; // returns 'Hello Dear Sibling, How Are You'.
   /// ```
   String? get toTitleCase {
     if (isEmpty) return this;
@@ -359,9 +352,9 @@ extension StringExtension on String {
     return words.join(' ');
   }
 
-  /// Assets üzerinde bulunan dosyayı okur.
+  /// Reads a file located in the assets.
   /// ```dart
-  ///  await 'images/template.png'.localFileData())
+  /// await 'images/template.png'.localFileData();
   /// ```
   Future<Uint8List> localFileData() => rootBundle.load(this).then(
         (byteData) => byteData.buffer.asUint8List(),

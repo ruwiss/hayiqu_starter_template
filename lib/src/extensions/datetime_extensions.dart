@@ -1,58 +1,65 @@
 part of 'extensions.dart';
 
 extension DateTimeExtensions on DateTime {
-  /// Verilen zaman ile şimdiki zaman farkını bulup
-  /// - şimdi
-  /// - 30 dk önce
-  /// - 2 gün önce
-  /// - 1 ay önce
-  /// çıktıları verir
-  String passingTime(DateTime? datetime) {
+  /// Calculates the time difference between the given date and the current time,
+  /// returning results in various formats:
+  /// - now
+  /// - 30 min ago / 3min
+  /// - 4 hours ago / 4h
+  /// - 2 days ago / 2d
+  /// - 1 month ago / 1m
+  String passingTime(DateTime? datetime,
+      {bool turkish = false, bool short = false}) {
     if (datetime == null) {
-      return " - ";
+      return " - "; // Returns a placeholder if the provided date is null
     }
 
-    final differenceTime = DateTime.now().difference(datetime);
+    final now = DateTime.now(); // Get the current time
+    final differenceTime =
+        now.difference(datetime); // Calculate the time difference
+    final isPast = differenceTime.isNegative
+        ? false
+        : true; // Check if the time is in the past
+    final absDifference = differenceTime.abs(); // Get the absolute difference
+
     String result = "";
-    if (differenceTime.inMinutes < 1) {
-      return "şimdi";
-    } else if (differenceTime.inMinutes < 60) {
-      result = "${differenceTime.inMinutes} dk";
-    } else if (differenceTime.inHours < 48) {
-      result = "${differenceTime.inHours} saat";
-    } else if (differenceTime.inDays < 30) {
-      result = "${differenceTime.inDays} gün";
-    } else {
-      result = "${(differenceTime.inDays ~/ 30)} ay";
-    }
-    return "$result önce";
-  }
 
-  /// Verilen zaman ile şimdiki zaman farkını bulup
-  /// - şimdi
-  /// - 30dk
-  /// - 2s
-  /// - 1g
-  /// - 3ay
-  /// çıktıları verir
-  String passingTimeSort(DateTime? datetime) {
-    if (datetime == null) {
-      return " - ";
+    if (absDifference.inMinutes < 1) {
+      return turkish
+          ? "şimdi"
+          : "now"; // Return 'now' if less than a minute has passed
+    } else if (absDifference.inMinutes < 60) {
+      final minutes = absDifference.inMinutes;
+      result =
+          "$minutes ${turkish ? 'dakika' : (short ? 'min' : minutes > 1 ? 'minutes' : 'minute')}";
+    } else if (absDifference.inHours < 24) {
+      final hours = absDifference.inHours;
+      result =
+          "$hours ${turkish ? 'saat' : (short ? 'h' : hours > 1 ? 'hours' : 'hour')}";
+    } else if (absDifference.inDays < 30) {
+      final days = absDifference.inDays;
+      result =
+          "$days ${turkish ? 'gün' : (short ? 'd' : days > 1 ? 'days' : 'day')}";
+    } else {
+      final months =
+          (absDifference.inDays / 30).floor(); // Calculate the number of months
+      result =
+          "$months ${turkish ? 'ay' : (short ? 'm' : months > 1 ? 'months' : 'month')}";
     }
 
-    final differenceTime = DateTime.now().difference(datetime);
-    String result = "";
-    if (differenceTime.inMinutes < 1) {
-      result = "şimdi";
-    } else if (differenceTime.inMinutes < 60) {
-      result = "${differenceTime.inMinutes}dk";
-    } else if (differenceTime.inHours < 48) {
-      result = "${differenceTime.inHours}s";
-    } else if (differenceTime.inDays < 30) {
-      result = "${differenceTime.inDays}g";
+    if (short) {
+      return result.replaceAll(
+          " ", ""); // Return the result if short format is requested
     } else {
-      result = "${(differenceTime.inDays ~/ 30)}ay";
+      if (isPast) {
+        return turkish
+            ? "$result önce"
+            : "$result ago"; // Return past time format
+      } else {
+        return turkish
+            ? "$result içinde"
+            : "in $result"; // Return future time format
+      }
     }
-    return result;
   }
 }
