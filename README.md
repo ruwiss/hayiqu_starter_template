@@ -302,11 +302,9 @@ await 'images/template.png'.localFileData())
 ___
 ### DateTime Extensions
 ```dart
-DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 gün önce'
-DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 gün önce'
-
-DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 1))); // '1g'
-DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 30))); // '30g'
+DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 day ago'
+DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 days ago'
+DateTime.now.passingTime(short: true, DateTime.now().add(Duration(days: 30))); // '30d'
 ```
 ___
 ### Number Extensions

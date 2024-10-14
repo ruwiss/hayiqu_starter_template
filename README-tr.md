@@ -297,11 +297,9 @@ await 'images/template.png'.localFileData())
 ```dart
 <!-- DateTime Extensions -->
 
-DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 gün önce'
-DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 gün önce'
-
-DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 1))); // '1g'
-DateTime.now.passingTimeSort(DateTime.now().add(Duration(days: 30))); // '30g'
+DateTime.now.passingTime(turkish: true, DateTime.now().add(Duration(days: 1))); // '1 gün önce'
+DateTime.now.passingTime(turkish: true, DateTime.now().add(Duration(days: 30))); // '30 gün önce'
+DateTime.now.passingTime(short: true, turkish: true, DateTime.now().add(Duration(days: 30))); // '30g'
 ```
 ```dart
 <!-- Number Extensions -->
