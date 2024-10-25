@@ -240,6 +240,40 @@ TextButton(
 ```
 ___
 
+Yükleme diyaloğu kullanımı
+
+<img src="public/loading.png" height="200">
+
+```dart
+// Eklentisiz Kullanım
+ElevatedButton(
+    onPressed: () async {
+        LoadingDialog.instance.setDefaultView();
+        LoadingDialog.instance.show(context: context, text: "Fetching..");
+        await Future.delayed(const Duration(seconds: 2));
+        if (context.mounted) {
+        LoadingDialog.instance
+            .show(context: context, text: "Almost Done");
+        }
+        await Future.delayed(const Duration(seconds: 1));
+        LoadingDialog.instance.hide();
+    },
+    child: const Text("Show Loading UseCase 2"),
+    ),
+
+
+// Eklentili Kullanım (Future)
+ElevatedButton(
+    onPressed: () {
+        LoadingDialog.instance.setView(const CustomLoadingView());
+        Future.delayed(const Duration(seconds: 2))
+            .showWithLoadingDialog(context: context, text: "Loading..");
+    },
+    child: const Text("Show Loading UseCase 1"),
+    ),
+```
+___
+
 Figma stili text with stroke efekti
 ```dart
 TextWithStroke(

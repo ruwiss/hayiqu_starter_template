@@ -14,3 +14,4 @@ part 'context_extensions.dart';
 part 'num_extensions.dart';
 part 'string_extensions.dart';
 part 'object_extensions.dart';
+part 'ui_extensions.dart';

@@ -1,7 +1,7 @@
 name: hayiqu
 description: "Flutter Provider Based Starter Template"
-version: 1.0.2
-homepage: https://pub.dev/
+version: 1.0.4
+github: https://github.com/ruwiss/hayiqu_starter_template
 
 environment:
   sdk: ^3.5.3
