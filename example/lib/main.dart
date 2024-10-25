@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         final themeProvider = context.watch<ThemeProvider>();
         return MaterialApp.router(
-          title: 'Örnek',
+          title: 'Example',
           theme: themeProvider.themeData,
           themeMode: themeProvider.themeMode,
           routerConfig: AppRouter.router,
