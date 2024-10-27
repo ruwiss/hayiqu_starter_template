@@ -24,24 +24,18 @@ class CustomLoadingView extends BaseLoadingView {
             minWidth: 150,
           ),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.black87,
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.white, width: 2),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const CircularProgressIndicator().resized(18),
-                const Gap(8),
-                Text(
-                  text,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: Colors.black),
-                ),
+                Text(text, style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
           ),

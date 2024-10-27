@@ -40,12 +40,11 @@ class LoadingView extends BaseLoadingView {
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const SizedBox(height: 10),
-              const CircularProgressIndicator(),
-              const SizedBox(height: 10),
+              const CircularProgressIndicator().resized(18),
               Text(
                 text,
                 style: Theme.of(context)

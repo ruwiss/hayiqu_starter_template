@@ -6,10 +6,10 @@ class LoadingDialog {
   static LoadingDialog get instance => _instance;
 
   LoadingDialogController? _controller;
-  BaseLoadingView? _view;
+  BaseLoadingView _view = const LoadingView();
 
   void setView(BaseLoadingView view) => _view = view;
-  void setDefaultView() => _view = null;
+  void setDefaultView() => _view = const LoadingView();
 
   void show({
     required BuildContext context,
@@ -40,9 +40,8 @@ class LoadingDialog {
         color: Colors.black.withAlpha(150),
         child: StreamBuilder(
           stream: textController.stream,
-          builder: (context, snapshot) {
-            return const LoadingView().copyWith(newText: snapshot.data);
-          },
+          builder: (context, snapshot) =>
+              _view.copyWith(newText: snapshot.data),
         ),
       ),
     );
