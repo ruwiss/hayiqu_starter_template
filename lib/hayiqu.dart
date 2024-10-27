@@ -9,6 +9,7 @@ export 'package:provider/provider.dart';
 // Helpers
 export 'package:path_provider/path_provider.dart';
 export 'package:crypto/crypto.dart';
+export 'package:intl/intl.dart';
 export 'src/utils/utils.dart';
 
 // Extensions

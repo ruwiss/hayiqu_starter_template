@@ -13,3 +13,7 @@ Added loading dialog and some extensions
 
 ## 0.0.5
 Some bugs fixed
+
+## 0.0.6
+Added Intl Package
+DateTime Extensions

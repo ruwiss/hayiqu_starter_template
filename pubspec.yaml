@@ -1,6 +1,6 @@
 name: hayiqu
 description: "Flutter Provider Based Starter Template"
-version: 1.0.5
+version: 1.0.6
 github: https://github.com/ruwiss/hayiqu_starter_template
 
 environment:
@@ -26,6 +26,7 @@ dependencies:
   toastification: ^2.3.0
   modal_bottom_sheet: ^3.0.0
   crypto: ^3.0.5
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

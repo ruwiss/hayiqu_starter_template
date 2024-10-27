@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:hayiqu/src/core/failure/stream_error_absorber.dart';
 import 'package:hayiqu/src/core/failure/stream_error_handler.dart';
