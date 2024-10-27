@@ -10,3 +10,6 @@ Added some extensions
 
 ## 0.0.4
 Added loading dialog and some extensions
+
+## 0.0.5
+Some bugs fixed
