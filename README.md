@@ -90,8 +90,8 @@ To get information about the application;
 ```dart
 await PackageInfoUtils().init();
 
-print(await PackageInfoUtils().getAppVersion());
-print(await PackageInfoUtils().getAppName());
+print(PackageInfoUtils().getAppVersion());
+print(PackageInfoUtils().getAppName());
 ```
 ___
 
@@ -106,37 +106,70 @@ SkeletonLoader(
 ___
 To customize or use HttpService;
 ```dart
-final _httpService = getIt<HttpService>();
+class ApiService {
+  final _httpService = getIt<HttpService>();
 
-_httpService.enableLogger(true);
-_httpService.setBaseUrl(baseUrl);
-_httpService.setHeaders(headers);
-
-_httpService.dio.options.connectTimeout = Duration(seconds: 5);
-_httpService.dio.interceptors.add(...dummyInterceptor);
+  void config() {
+    _httpService.enableLogger(true);
+    _httpService.setBaseUrl("example.com");
+    _httpService.setHeaders({});
+    _httpService.dio.options.connectTimeout = const Duration(seconds: 5);
+    _httpService.dio.interceptors.add();
+  }
 
 // GET request (with cache)
-final Result result = await _httpService.get(endpoint, useCache: true);
-if (result.hasValue) {...}
-if (result.hasError) { result.requireError.message.log(); // type: DioException }
+  void _exampleGetRequest() async {
+    final Result result = await _httpService.get("/users", useCache: true);
+    if (result.hasValue) {}
+    if (result.hasError) {
+      result.requireError.message.log();
+    }
+  }
 
 // POST request
-await _httpService.post(endpoint);
+  void _examplePostRequest() async {
+    final Map<String, dynamic> data = {"name": "John Doe"};
+    final Result result = await _httpService.post("/users", data: data);
+    if (result.hasValue) {}
+    if (result.hasError) {
+      result.requireError.message.log();
+    }
+  }
 
 // PUT request
-await _httpService.put(endpoint);
+  void _examplePutRequest() async {
+    final Map<String, dynamic> data = {"name": "John Doe"};
+    final Result result = await _httpService.put("/users/1", data: data);
+    if (result.hasValue) {}
+    if (result.hasError) {
+      result.requireError.message.log();
+    }
+  }
 
 // DELETE request
-await _httpService.delete(endpoint);
+  void _exampleDeleteRequest() async {
+    final Result result = await _httpService.delete("/users/1");
+    if (result.hasValue) {}
+    if (result.hasError) {
+      result.requireError.message.log();
+    }
+  }
 
 // Single file download
-await _httpService.download(
-  url: url,
-  savePath: savePath,
-  onProgress: (received, total) {
-    // Progress handling
-  },
-);
+  void _exampleDownload() async {
+    final Result result = await _httpService.download(
+      url: "https://example.com/file.pdf",
+      savePath: "example.pdf",
+      onProgress: (received, total) {
+        // Progress handling
+      },
+    );
+    if (result.hasValue) {}
+    if (result.hasError) {
+      result.requireError.message.log();
+    }
+  }
+}
 ```
 ___
 Error / Result Management for [Result]
@@ -165,7 +198,7 @@ For application theme;
 class ThemeProvider extends BaseTheme {}
 
 
-// main.dart
+// http.dart
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -400,29 +433,19 @@ static Future<File> pickImageFromGallery() => _imagePicker
 
 // Future.futureBuilder() function
 // This function performs the same function as FutureBuilde
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-    Future<String> getName() => Future.delayed(
-        const Duration(seconds: 2),
-        () => 'Example',
-    );
-
-  @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: getName().futureBuilder(
-          onData: (_, name) => Text(name),
-          onNone: onNone,
-          // onError: ..,
-          // onDoneWithoutDataOrError: ..,
-          // onWaiting: ..,
+            body: FutureBuilder<String>(
+            future: getName(),
+            builder: (context, snapshot) => snapshot.futureBuilder(
+                context: context,
+                onData: (_, name) => Text(name),
+                // onError: ..,
+                // onDoneWithoutDataOrError: ..,
+                // onWaiting: ..,
+            ),
         ),
-      ),
     );
-  }
 }
 
 ```

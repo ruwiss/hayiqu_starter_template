@@ -17,3 +17,7 @@ Some bugs fixed
 ## 0.0.6
 Added Intl Package
 DateTime Extensions
+
+## 0.0.7
+Added examples
+Fixed futureBuilder extension

@@ -2,6 +2,7 @@ part of '../future_dialog.dart';
 
 abstract class BaseLoadingView extends StatelessWidget {
   final String text;
+
   const BaseLoadingView({super.key, this.text = "Loading"});
 
   BaseLoadingView copyWith({String? newText});

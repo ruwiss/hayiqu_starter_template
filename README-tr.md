@@ -90,8 +90,8 @@ Uygulama hakkında bilgi almak için;
 ```dart
 await PackageInfoUtils().init();
 
-print(await PackageInfoUtils().getAppVersion());
-print(await PackageInfoUtils().getAppName());
+print(PackageInfoUtils().getAppVersion());
+print(PackageInfoUtils().getAppName());
 ```
 ___
 
@@ -165,7 +165,7 @@ Uygulama teması için;
 class ThemeProvider extends BaseTheme {}
 
 
-// main.dart
+// http.dart
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -406,23 +406,19 @@ Future<String> getName() => Future.delayed(
     () => 'John Smith',
 );
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: getName().present(
-          onData: (_, name) => Text(name),
-          onNone: onNone,
-          // onError: ..,
-          // onDoneWithoutDataOrError: ..,
-          // onWaiting: ..,
+        body: FutureBuilder<String>(
+            future: getName(),
+            builder: (context, snapshot) => snapshot.futureBuilder(
+                context: context,
+                onData: (_, name) => Text(name),
+                // onError: ..,
+                // onDoneWithoutDataOrError: ..,
+                // onWaiting: ..,
+            ),
         ),
-      ),
     );
-  }
 }
 
 ```
