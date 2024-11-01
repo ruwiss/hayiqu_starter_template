@@ -28,25 +28,24 @@ extension Unwrap<T> on Future<T?> {
 }
 
 extension PresentAsyncSnapshot<E> on AsyncSnapshot<E> {
-  /// Mimics the functionality of FutureBuilder.
   /// Usage:
   /// ```dart
-  /// @override
-  /// Widget build(BuildContext context) {
-  ///   return Scaffold(
-  ///     body: SafeArea(
-  ///       child: getName().present(
-  ///         onData: (_, name) => Text(name),
-  ///         onNone: onNone,
-  ///         onError: ..,
-  ///         onDoneWithoutDataOrError: ..,
-  ///         onWaiting: ..,
-  ///       ),
-  ///     ),
-  ///   );
-  /// }
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: FutureBuilder<String>(
+  //       future: getName(),
+  //       builder: (context, snapshot) => snapshot.asWidget(
+  //         context: context,
+  //         onData: (_, name) => Text(name),
+  //         // onError: ..,
+  //         // onDoneWithoutDataOrError: ..,
+  //         // onWaiting: ..,
+  //       ),
+  //     ),
+  //   );
+  // }
   /// ```
-  Widget futureBuilder({
+  Widget asWidget({
     required BuildContext context,
     Widget Function(BuildContext context)? onNone,
     Widget Function(BuildContext context, E data)? onData,
@@ -93,7 +92,7 @@ extension PresentFuture<E> on Future<E> {
   }) {
     return FutureBuilder<E>(
       future: this,
-      builder: (context, snapshot) => snapshot.futureBuilder(
+      builder: (context, snapshot) => snapshot.asWidget(
         context: context,
         onNone: onNone,
         onData: onData,

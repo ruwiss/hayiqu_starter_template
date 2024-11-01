@@ -406,11 +406,18 @@ Future<String> getName() => Future.delayed(
     () => 'John Smith',
 );
 
+
+/// FutureBuilder durumlarına göre farklı widget'lar döndüren yardımcı uzantı.
+/// 
+/// - `ConnectionState.none` durumunda [onNone] widget'ını çağırır.
+/// - `ConnectionState.waiting` veya `active` durumunda [onWaiting] widget'ını çağırır.
+/// - `ConnectionState.done` durumunda veri varsa [onData], hata varsa [onError], 
+///   her ikisi de yoksa [onDoneWithoutDataOrError] widget'ını çağırır.
 Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<String>(
             future: getName(),
-            builder: (context, snapshot) => snapshot.futureBuilder(
+            builder: (context, snapshot) => snapshot.asWidget(
                 context: context,
                 onData: (_, name) => Text(name),
                 // onError: ..,

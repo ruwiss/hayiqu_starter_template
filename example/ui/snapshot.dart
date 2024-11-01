@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: FutureBuilder<String>(
         future: getName(),
-        builder: (context, snapshot) => snapshot.futureBuilder(
+        builder: (context, snapshot) => snapshot.asWidget(
           context: context,
           onData: (_, name) => Text(name),
           // onError: ..,

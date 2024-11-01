@@ -20,4 +20,7 @@ DateTime Extensions
 
 ## 0.0.7
 Added examples
-Fixed futureBuilder extension
+Edited futureBuilder extension
+
+## 0.0.8
+Renamed AsyncSnapshot extension as snapshot.asWidget();

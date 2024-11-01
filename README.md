@@ -431,8 +431,12 @@ static Future<File> pickImageFromGallery() => _imagePicker
     .then((filePath) => File(filePath))
 
 
-// Future.futureBuilder() function
-// This function performs the same function as FutureBuilde
+/// Helper extension that returns different widgets based on FutureBuilder states.
+/// 
+/// - Calls [onNone] widget in `ConnectionState.none` state.
+/// - Calls [onWaiting] widget in `ConnectionState.waiting` or `active` state.
+/// - In `ConnectionState.done`, calls [onData] if there’s data, 
+///   [onError] if there’s an error, or [onDoneWithoutDataOrError] if neither is present.
 Widget build(BuildContext context) {
     return Scaffold(
             body: FutureBuilder<String>(
