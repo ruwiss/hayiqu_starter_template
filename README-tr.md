@@ -19,7 +19,7 @@ Hayiqu, çoğu projenizde kullanacağınız yapıları içerir. Aynı kodları t
 
 * Birbirinden farklı `Context, DateTime, Number, String` eklentilerini,
 
-* Yükleme ekranlarında kullanabilmek için `SkeletonLoader` widget yapısını,
+* Yükleme ekranlarında kullanabilmek için `Skeletonizer` widget yapısını,
 
 * Dio paketinin özelleştirilmiş ve kullanımı kolay hale getirilmiş olan `HttpService` yapısını,
 
@@ -97,8 +97,8 @@ ___
 
 İçerikleri yükleme (bekleme) ekranları için;
 ```dart
-SkeletonLoader(
-  loading: true,
+Skeletonizer(
+  enabled: true,
   ...
   child: const HomeScreen(),
 );
@@ -408,10 +408,10 @@ Future<String> getName() => Future.delayed(
 
 
 /// FutureBuilder durumlarına göre farklı widget'lar döndüren yardımcı uzantı.
-/// 
+///
 /// - `ConnectionState.none` durumunda [onNone] widget'ını çağırır.
 /// - `ConnectionState.waiting` veya `active` durumunda [onWaiting] widget'ını çağırır.
-/// - `ConnectionState.done` durumunda veri varsa [onData], hata varsa [onError], 
+/// - `ConnectionState.done` durumunda veri varsa [onData], hata varsa [onError],
 ///   her ikisi de yoksa [onDoneWithoutDataOrError] widget'ını çağırır.
 Widget build(BuildContext context) {
     return Scaffold(

@@ -19,7 +19,7 @@ Hayiqu includes structures that you will use in most of your projects. We recomm
 
 * Different extensions for `Context`, `DateTime`, `Number`, and `String`,
 
-* [SkeletonLoader](cci:2://file:///c:/Users/omer/Documents/Projeler/hayiqu/lib/src/ui/skeleton_loader.dart:9:0-29:1) widget structure for loading screens,
+* Skeletonizer widget structure for loading screens,
 
 * A customized and easy-to-use `HttpService` structure based on Dio package,
 
@@ -97,8 +97,8 @@ ___
 
 For loading (waiting) screens with content;
 ```dart
-SkeletonLoader(
-  loading: true,
+Skeletonizer(
+  enabled: true,
   ...
   child: const HomeScreen(),
 );
@@ -432,10 +432,10 @@ static Future<File> pickImageFromGallery() => _imagePicker
 
 
 /// Helper extension that returns different widgets based on FutureBuilder states.
-/// 
+///
 /// - Calls [onNone] widget in `ConnectionState.none` state.
 /// - Calls [onWaiting] widget in `ConnectionState.waiting` or `active` state.
-/// - In `ConnectionState.done`, calls [onData] if there’s data, 
+/// - In `ConnectionState.done`, calls [onData] if there’s data,
 ///   [onError] if there’s an error, or [onDoneWithoutDataOrError] if neither is present.
 Widget build(BuildContext context) {
     return Scaffold(

@@ -6,12 +6,8 @@ class ExampleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SkeletonLoader(
-      loading: true,
-      // cornerRadius: ,
-      // duration: ,
-      // startColor: ,
-      // endColor: ,
+    return Skeletonizer(
+      enabled: true,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
