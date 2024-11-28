@@ -17,30 +17,6 @@ extension MediaQueryExtension on BuildContext {
   /// Returns the width of the device.
   double get width => MediaQuery.sizeOf(this).width;
 
-  /// Returns 1% of the device's height.
-  double get lowValue => height * 0.01;
-
-  /// Returns 2% of the device's height.
-  double get defaultValue => height * 0.02;
-
-  /// Returns 5% of the device's height.
-  double get highValue => height * 0.05;
-
-  /// Returns 10% of the device's height.
-  double get veryhighValue1x => height * 0.1;
-
-  /// Returns 20% of the device's height.
-  double get veryhighValue2x => height * 0.2;
-
-  /// Returns 30% of the device's height.
-  double get veryhighValue3x => height * 0.3;
-
-  /// Returns 40% of the device's height.
-  double get veryhighValue4x => height * 0.4;
-
-  /// Returns 50% of the device's height.
-  double get veryhighValue5x => height * 0.5;
-
   /// Returns the width of the device multiplied by the given value.
   double dynamicWidth(double val) => width * val;
 
@@ -48,72 +24,49 @@ extension MediaQueryExtension on BuildContext {
   double dynamicHeight(double val) => height * val;
 }
 
+
 extension PaddingExtension on BuildContext {
-  /// Adds 1% padding on all sides.
-  EdgeInsets get paddingAllLow => EdgeInsets.all(lowValue);
+  EdgeInsets get paddingLow => EdgeInsets.all(height * 0.01);
+  EdgeInsets get paddingMedium => EdgeInsets.all(height * 0.02);
+  EdgeInsets get paddingHigh => EdgeInsets.all(height * 0.03);
 
-  /// Adds 2% padding on all sides.
-  EdgeInsets get paddingAllDefault => EdgeInsets.all(defaultValue);
+  EdgeInsets get horizontalPaddingLow => EdgeInsets.symmetric(horizontal: width * 0.02);
+  EdgeInsets get horizontalPaddingMedium => EdgeInsets.symmetric(horizontal: width * 0.04);
+  EdgeInsets get horizontalPaddingHigh => EdgeInsets.symmetric(horizontal: width * 0.06);
 
-  /// Adds 5% padding on all sides.
-  EdgeInsets get paddingAllHigh => EdgeInsets.all(highValue);
+  EdgeInsets get verticalPaddingLow => EdgeInsets.symmetric(vertical: height * 0.01);
+  EdgeInsets get verticalPaddingMedium => EdgeInsets.symmetric(vertical: height * 0.02);
+  EdgeInsets get verticalPaddingHigh => EdgeInsets.symmetric(vertical: height * 0.03);
+}
 
-  /// Adds 1% padding horizontally.
-  EdgeInsets get paddingHorizontalLow =>
-      EdgeInsets.symmetric(horizontal: lowValue);
+extension BorderRadiusExtension on BuildContext {
+  BorderRadius get borderRadiusLow => BorderRadius.circular(width * 0.02);
+  BorderRadius get borderRadiusMedium => BorderRadius.circular(width * 0.04);
+  BorderRadius get borderRadiusHigh => BorderRadius.circular(width * 0.06);
+}
 
-  /// Adds 2% padding horizontally.
-  EdgeInsets get paddingHorizontalDefault =>
-      EdgeInsets.symmetric(horizontal: defaultValue);
+extension BoxShadowExtension on BuildContext {
+  List<BoxShadow> get boxShadowLight => [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.1),
+      blurRadius: 4,
+      offset: const Offset(0, 2),
+    ),
+  ];
 
-  /// Adds 5% padding horizontally.
-  EdgeInsets get paddingHorizontalHigh =>
-      EdgeInsets.symmetric(horizontal: highValue);
+  List<BoxShadow> get boxShadowMedium => [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.15),
+      blurRadius: 8,
+      offset: const Offset(0, 4),
+    ),
+  ];
 
-  /// Adds 1% padding vertically.
-  EdgeInsets get paddingVerticalLow => EdgeInsets.symmetric(vertical: lowValue);
-
-  /// Adds 2% padding vertically.
-  EdgeInsets get paddingVerticalDefault =>
-      EdgeInsets.symmetric(vertical: defaultValue);
-
-  /// Adds 5% padding vertically.
-  EdgeInsets get paddingVerticalHigh =>
-      EdgeInsets.symmetric(vertical: highValue);
-
-  /// Adds 1% padding on the right.
-  EdgeInsets get paddingRightLow => EdgeInsets.only(right: lowValue);
-
-  /// Adds 2% padding on the right.
-  EdgeInsets get paddingRightDefault => EdgeInsets.only(right: defaultValue);
-
-  /// Adds 5% padding on the right.
-  EdgeInsets get paddingRightHigh => EdgeInsets.only(right: highValue);
-
-  /// Adds 1% padding on the left.
-  EdgeInsets get paddingLeftLow => EdgeInsets.only(left: lowValue);
-
-  /// Adds 2% padding on the left.
-  EdgeInsets get paddingLeftDefault => EdgeInsets.only(left: defaultValue);
-
-  /// Adds 5% padding on the left.
-  EdgeInsets get paddingLeftHigh => EdgeInsets.only(left: highValue);
-
-  /// Adds 1% padding on the top.
-  EdgeInsets get paddingTopLow => EdgeInsets.only(top: lowValue);
-
-  /// Adds 2% padding on the top.
-  EdgeInsets get paddingTopDefault => EdgeInsets.only(top: defaultValue);
-
-  /// Adds 5% padding on the top.
-  EdgeInsets get paddingTopHigh => EdgeInsets.only(top: highValue);
-
-  /// Adds 1% padding on the bottom.
-  EdgeInsets get paddingBottomLow => EdgeInsets.only(bottom: lowValue);
-
-  /// Adds 2% padding on the bottom.
-  EdgeInsets get paddingBottomDefault => EdgeInsets.only(bottom: defaultValue);
-
-  /// Adds 5% padding on the bottom.
-  EdgeInsets get paddingBottomHigh => EdgeInsets.only(bottom: highValue);
+  List<BoxShadow> get boxShadowHigh => [
+    BoxShadow(
+      color: Colors.black.withOpacity(0.2),
+      blurRadius: 12,
+      offset: const Offset(0, 6),
+    ),
+  ];
 }

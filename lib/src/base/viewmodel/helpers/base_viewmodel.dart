@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'mixin/mixins.dart';
+part of '../viewmodel.dart';
 
 abstract class BaseViewModel extends ChangeNotifier
     with StateHelper, BuilderHelper {

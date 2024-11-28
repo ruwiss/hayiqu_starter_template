@@ -1,4 +1,4 @@
-[![Language - English](https://img.shields.io/badge/(Current)-English-9FE2BF)]()
+[![Language - English](<https://img.shields.io/badge/(Current)-English-9FE2BF>)]()
 [![Language - Türkçe](https://img.shields.io/badge/Language-Türkçe-2ea44f)](./README-tr.md)
 
 # Hayiqu Starter Template
@@ -11,31 +11,29 @@ Hayiqu includes structures that you will use in most of your projects. We recomm
 
 ## What does Hayiqu include?
 
-* Provider for State Management and Dependency Injection with `GetIt` package along with `BaseViewModel` structure,
+- Provider for State Management and Dependency Injection with `GetIt` package along with `BaseViewModel` structure,
 
-* `GoRouter` package for navigation,
+- `GoRouter` package for navigation,
 
-* `DeviceInfoUtils`, `DeviceOrientationSettings`, and `PackageInfoUtils` packages to control the device,
+- `DeviceInfoUtils`, `DeviceOrientationSettings`, and `PackageInfoUtils` packages to control the device,
 
-* Different extensions for `Context`, `DateTime`, `Number`, and `String`,
+- Different extensions for `Context`, `DateTime`, `Number`, and `String`,
 
-* Skeletonizer widget structure for loading screens,
+- Skeletonizer widget structure for loading screens,
 
-* A customized and easy-to-use `HttpService` structure based on Dio package,
+- A customized and easy-to-use `HttpService` structure based on Dio package,
 
-* `BaseTheme` structure for application theme,
+- `BaseTheme` structure for application theme,
 
-* `gap`, `flutter_svg`, `cached_network_image`, `toastification`, `modal_bottom_sheet` package, and `fluid dialog` widget structure for UI,
+- `gap`, `flutter_svg`, `cached_network_image`, `toastification`, `modal_bottom_sheet` package, and `fluid dialog` widget structure for UI,
 
-* `flutter_cache_manager` package for cache management,
+- `flutter_cache_manager` package for cache management,
 
-* `crypto` package for encryption,
-
+- `crypto` package for encryption,
 
 ## Usage Examples
 
 You can extend the BaseViewModel structure to add convenient features to the ViewModel structure created with Provider.
-
 
 ```dart
 // Example usage
@@ -55,7 +53,8 @@ class MyViewModel with BaseViewModel {
 }
 ```
 
-___
+---
+
 You can use the GetIt package for Dependency Injection.
 
 ```dart
@@ -70,32 +69,41 @@ void main() async {
 }
 ```
 
-___
+---
 
 To get detailed information about the current device;
+
 ```dart
 print(await DeviceInfoUtils().getPlatformName());
 print(await DeviceInfoUtils().getDeviceId());
 ```
-___
+
+---
+
 For device-oriented screens;
+
 ```dart
 await DeviceOrientationSettings.screenVertical();
 await DeviceOrientationSettings.screenHorizontal();
 await DeviceOrientationSettings.screenRight();
 await DeviceOrientationSettings.screenLeft();
 ```
-___
+
+---
+
 To get information about the application;
+
 ```dart
 await PackageInfoUtils().init();
 
 print(PackageInfoUtils().getAppVersion());
 print(PackageInfoUtils().getAppName());
 ```
-___
+
+---
 
 For loading (waiting) screens with content;
+
 ```dart
 Skeletonizer(
   enabled: true,
@@ -103,8 +111,11 @@ Skeletonizer(
   child: const HomeScreen(),
 );
 ```
-___
+
+---
+
 To customize or use HttpService;
+
 ```dart
 class ApiService {
   final _httpService = getIt<HttpService>();
@@ -171,8 +182,11 @@ class ApiService {
   }
 }
 ```
-___
+
+---
+
 Error / Result Management for [Result]
+
 ```dart
 Future<Result<int, FirebaseException>> getUserId() async {
     try {
@@ -191,8 +205,11 @@ if (result.hasError) {
   result.requireValue.log();
 }
 ```
-___
+
+---
+
 For application theme;
+
 ```dart
 // app/theme.dart
 class ThemeProvider extends BaseTheme {}
@@ -222,8 +239,11 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-___
+
+---
+
 Gap usage
+
 ```dart
 Row(
     children: [
@@ -241,8 +261,11 @@ Column(
     ],
 )
 ```
-___
+
+---
+
 Fluid Dialog usage
+
 ```dart
 OutlinedButton(
     onPressed: () {
@@ -271,11 +294,10 @@ TextButton(
   child: const Text('Go to next page'),
 ),
 ```
-___
+
+---
 
 Loading Dialog Usage
-
-<img src="public/loading.png" height="200">
 
 ```dart
 // Without Extension
@@ -305,9 +327,11 @@ ElevatedButton(
     child: const Text("Show Loading UseCase 1"),
     ),
 ```
-___
+
+---
 
 Figma-style text with stroke effect
+
 ```dart
 TextWithStroke(
     text: 'Flutter with Stroke',
@@ -317,8 +341,11 @@ TextWithStroke(
     ),
 ),
 ```
-___
+
+---
+
 RichTextWidget
+
 ```dart
 body: Padding(
     padding: const EdgeInsets.all(8.0),
@@ -339,9 +366,13 @@ body: Padding(
 );
 ),
 ```
-___
+
+---
+
 ## Useful Extensions
+
 ### String Extensions
+
 ```dart
 "exAmpLE".capitalize; // 'Example'
 "example@gmail.com".isMail; // true
@@ -363,15 +394,21 @@ ___
 // Returns Uint8List data
 await 'images/template.png'.localFileData())
 ```
-___
+
+---
+
 ### DateTime Extensions
+
 ```dart
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 1))); // '1 day ago'
 DateTime.now.passingTime(DateTime.now().add(Duration(days: 30))); // '30 days ago'
 DateTime.now.passingTime(short: true, DateTime.now().add(Duration(days: 30))); // '30d'
 ```
-___
+
+---
+
 ### Number Extensions
+
 ```dart
 12.sbh(); // SizedBox(height: 12)
 12.sbw(); // SizedBox(width: 12)
@@ -379,8 +416,11 @@ ___
 0.2.vh; // Screen Height * 0.2
 
 ```
-___
+
+---
+
 ### Context Extensions
+
 ```dart
 context.colors; // Theme.of(context).colorScheme
 context.textTheme; // Theme.of(context).textTheme
@@ -413,8 +453,11 @@ context.paddingVerticalHigh; // EdgeInsets.symmetric(vertical: context.highValue
 
 ... and more
 ```
-___
+
+---
+
 ### Function Extensions
+
 ```dart
 // Waiting operation in VoidCallback functions
 _counterClockwiseRotationController.forward.delayedCall(
@@ -453,8 +496,11 @@ Widget build(BuildContext context) {
 }
 
 ```
-___
+
+---
+
 ### Stream Extensions
+
 ```dart
 // Waiting operation between events
 await for (final name in getNames().withTimeoutBetweenEvents(
@@ -500,8 +546,11 @@ Future<void> testIt() async {
   }
 }
 ```
-___
+
+---
+
 ### Object Extensions
+
 ```dart
 // Flattening the list
 void testIt() {

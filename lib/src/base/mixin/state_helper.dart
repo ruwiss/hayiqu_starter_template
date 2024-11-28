@@ -20,7 +20,7 @@ mixin StateHelper on ChangeNotifier {
   }
 
   /// Marks the ViewModel as busy and notifies listeners.
-  void setBusy({required bool value}) => setBusyForObject(this, value: value);
+  void setBusy(bool value) => setBusyForObject(this, value: value);
 
   /// Marks the ViewModel as busy, runs the Future function, and removes the busy state when completed.
   /// If throwException is true, [Exception] is rethrown.

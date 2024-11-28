@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:hayiqu/src/base/viewmodel.dart';
+
+import 'viewmodel/viewmodel.dart';
 
 abstract class BaseTheme extends BaseViewModel {
   // Gets the current platform brightness (light or dark mode).

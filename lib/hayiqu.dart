@@ -9,6 +9,7 @@ export 'package:provider/provider.dart';
 // Helpers
 export 'package:path_provider/path_provider.dart';
 export 'package:crypto/crypto.dart';
+export 'src/base/mixin/mixins.dart';
 export 'src/utils/utils.dart';
 
 // Extensions
@@ -27,7 +28,8 @@ export 'src/ui/rich_text_widget.dart';
 export 'package:gap/gap.dart';
 
 // Base
-export 'src/base/viewmodel.dart';
+export 'src/base/viewmodel/viewmodel.dart';
+export 'src/base/viewmodel/widget.dart';
 export 'src/base/theme.dart';
 
 // Services
