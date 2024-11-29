@@ -24,19 +24,24 @@ extension MediaQueryExtension on BuildContext {
   double dynamicHeight(double val) => height * val;
 }
 
-
 extension PaddingExtension on BuildContext {
   EdgeInsets get paddingLow => EdgeInsets.all(height * 0.01);
   EdgeInsets get paddingMedium => EdgeInsets.all(height * 0.02);
   EdgeInsets get paddingHigh => EdgeInsets.all(height * 0.03);
 
-  EdgeInsets get horizontalPaddingLow => EdgeInsets.symmetric(horizontal: width * 0.02);
-  EdgeInsets get horizontalPaddingMedium => EdgeInsets.symmetric(horizontal: width * 0.04);
-  EdgeInsets get horizontalPaddingHigh => EdgeInsets.symmetric(horizontal: width * 0.06);
+  EdgeInsets get horizontalPaddingLow =>
+      EdgeInsets.symmetric(horizontal: width * 0.02);
+  EdgeInsets get horizontalPaddingMedium =>
+      EdgeInsets.symmetric(horizontal: width * 0.04);
+  EdgeInsets get horizontalPaddingHigh =>
+      EdgeInsets.symmetric(horizontal: width * 0.06);
 
-  EdgeInsets get verticalPaddingLow => EdgeInsets.symmetric(vertical: height * 0.01);
-  EdgeInsets get verticalPaddingMedium => EdgeInsets.symmetric(vertical: height * 0.02);
-  EdgeInsets get verticalPaddingHigh => EdgeInsets.symmetric(vertical: height * 0.03);
+  EdgeInsets get verticalPaddingLow =>
+      EdgeInsets.symmetric(vertical: height * 0.01);
+  EdgeInsets get verticalPaddingMedium =>
+      EdgeInsets.symmetric(vertical: height * 0.02);
+  EdgeInsets get verticalPaddingHigh =>
+      EdgeInsets.symmetric(vertical: height * 0.03);
 }
 
 extension BorderRadiusExtension on BuildContext {
@@ -47,26 +52,26 @@ extension BorderRadiusExtension on BuildContext {
 
 extension BoxShadowExtension on BuildContext {
   List<BoxShadow> get boxShadowLight => [
-    BoxShadow(
-      color: Colors.black.withOpacity(0.1),
-      blurRadius: 4,
-      offset: const Offset(0, 2),
-    ),
-  ];
+        BoxShadow(
+          color: Colors.black.withAlpha(25),
+          blurRadius: 4,
+          offset: const Offset(0, 2),
+        ),
+      ];
 
   List<BoxShadow> get boxShadowMedium => [
-    BoxShadow(
-      color: Colors.black.withOpacity(0.15),
-      blurRadius: 8,
-      offset: const Offset(0, 4),
-    ),
-  ];
+        BoxShadow(
+          color: Colors.black.withAlpha(25),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ];
 
   List<BoxShadow> get boxShadowHigh => [
-    BoxShadow(
-      color: Colors.black.withOpacity(0.2),
-      blurRadius: 12,
-      offset: const Offset(0, 6),
-    ),
-  ];
+        BoxShadow(
+          color: Colors.black.withAlpha(25),
+          blurRadius: 12,
+          offset: const Offset(0, 6),
+        ),
+      ];
 }

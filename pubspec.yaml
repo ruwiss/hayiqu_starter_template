@@ -5,7 +5,7 @@ homepage: https://www.youtube.com/@hq_net
 repository: https://github.com/ruwiss/hayiqu_starter_template
 
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.5.4
   flutter: ">=1.17.0"
 
 dependencies:
@@ -21,7 +21,7 @@ dependencies:
   dio: ^5.7.0
   flutter_svg: ^2.0.10+1
   pretty_dio_logger: ^1.4.0
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
   cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.4.1
   toastification: ^2.3.0
